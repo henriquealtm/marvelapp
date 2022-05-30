@@ -3,7 +3,7 @@ package com.example.marvelapp
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -29,7 +29,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNavigation() {
-        navController = findNavController(R.id.nav_host_fragment_content_main)
+        val navContainer = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment_content_main)
+            ?: return
+        navController = navContainer.findNavController()
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
