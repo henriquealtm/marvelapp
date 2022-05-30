@@ -1,4 +1,4 @@
-package com.example.character.domain
+package com.example.character.domain.model
 
 data class Character(
     val id: Int,

@@ -2,31 +2,21 @@ package com.example.character.presentation
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.character.domain.Character
+import androidx.lifecycle.viewModelScope
+import com.example.character.domain.model.Character
+import com.example.character.domain.usecase.CharacterListUseCase
+import kotlinx.coroutines.launch
 
-class CharacterListViewModel : ViewModel() {
+class CharacterListViewModel(
+    private val useCase: CharacterListUseCase,
+) : ViewModel() {
 
-    val list = MutableLiveData(
-        listOf(
-            Character(
-                id = 1,
-                name = "Spider-Man",
-                description = "Bitten by a radioactive spider, Peter Parker’s arachnid abilities " +
-                        "give him amazing powers he uses to help others, while his personal life " +
-                        "continues to offer plenty of obstacles."
-            ),
-            Character(
-                id = 2,
-                name = "Iron Man",
-                description = "Genius. Billionaire. Philanthropist. Tony Stark's confidence is " +
-                        "only matched by his high-flying abilities as the hero called Iron Man."
-            ),
-            Character(
-                id = 3,
-                name = "Thor",
-                description = ""
-            ),
-        )
-    )
+    val list = MutableLiveData<List<Character>>()
+
+    init {
+        viewModelScope.launch {
+            list.value = useCase.invoke()
+        }
+    }
 
 }
