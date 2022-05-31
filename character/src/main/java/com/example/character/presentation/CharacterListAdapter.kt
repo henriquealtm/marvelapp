@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.character.R
 import com.example.character.databinding.ItemCharacterBinding
-import com.example.character.domain.Character
+import com.example.character.domain.model.Character
 
 internal class CharacterAdapter(
     private val onItemClick: (Character) -> Unit,
