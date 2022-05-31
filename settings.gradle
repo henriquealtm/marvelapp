@@ -16,3 +16,4 @@ rootProject.name = "MarvelApp"
 include ':app'
 include ':character'
 include ':network'
+include ':commons'

@@ -10,9 +10,9 @@ import com.example.character.R
 import com.example.character.databinding.ItemCharacterBinding
 import com.example.character.domain.model.Character
 
-internal class CharacterAdapter(
+internal class CharacterListAdapter(
     private val onItemClick: (Character) -> Unit,
-) : ListAdapter<Character, CharacterAdapter.DataHolder>(DiffCallback) {
+) : ListAdapter<Character, CharacterListAdapter.DataHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataHolder {
         return DataHolder(
@@ -26,7 +26,11 @@ internal class CharacterAdapter(
     }
 
     override fun onBindViewHolder(holder: DataHolder, position: Int) {
-        holder.binding.character = getItem(position)
+        holder.binding.run {
+            val item = getItem(position)
+            character = item
+            clContainer.setOnClickListener { onItemClick(item) }
+        }
     }
 
     inner class DataHolder(val binding: ItemCharacterBinding) :
