@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/characterListFragment"
         android:name="com.example.character.presentation.CharacterListFragment"
-        android:label="SplashFragment"
+        android:label="Character List"
         app:moduleName="character"
         tools:layout="@layout/fragment_character_list" />
 

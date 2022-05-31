@@ -16,7 +16,7 @@ class CharacterListFragment : Fragment() {
     private lateinit var binding: FragmentCharacterListBinding
     private val characterListVm: CharacterListViewModel by viewModel()
 
-    private val characterAdapter = CharacterAdapter { character ->
+    private val characterAdapter = CharacterListAdapter { character ->
         Toast.makeText(
             requireContext(),
             "Clicked - ${character.name}",
