@@ -45,7 +45,7 @@ class CharacterListViewModel(
     override fun onResume(owner: LifecycleOwner) {
         super.onResume(owner)
 
-        viewModelScope.launch {
+      viewModelScope.launch {
             resourceList.value = useCase.invoke()
         }
     }
