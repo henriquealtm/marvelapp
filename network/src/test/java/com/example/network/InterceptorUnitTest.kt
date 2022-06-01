@@ -1,18 +1,13 @@
 package com.example.network
 
-import io.mockk.every
-import io.mockk.mockk
-import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
-import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class InterceptorUnitTest {
 
     @Test
-    fun `GIVEN the initial state WHEN calling getNewUrlWithQueryParameters() THEN return a valid HttpUrl`() {
+    fun `WHEN calling getNewUrlWithQueryParameters() THEN return a valid HttpUrl`() {
         val httpUrl = "https://gateway.marvel.com:443/".toHttpUrl()
         val newUrl = getNewUrlWithQueryParameters(httpUrl, "1654041635344")
 
