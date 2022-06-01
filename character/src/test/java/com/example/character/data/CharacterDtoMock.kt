@@ -1,10 +1,10 @@
-package com.example.character
+package com.example.character.data
 
 import com.example.character.data.model.CharacterDataContainer
 import com.example.character.data.model.CharacterDataWrapper
 import com.example.character.data.model.CharacterDto
 
-internal fun getCharacterList() = listOf(
+internal fun getCharacterDtoList() = listOf(
     CharacterDto(
         id = 1,
         name = "3D-Man",
@@ -24,7 +24,7 @@ internal fun getContainer() = CharacterDataContainer(
     limit = 20,
     total = 100,
     count = 2,
-    results = getCharacterList(),
+    results = getCharacterDtoList(),
 )
 
 internal fun getWrapper() = CharacterDataWrapper(

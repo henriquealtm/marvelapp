@@ -22,6 +22,6 @@ data class CharacterDto(
 )
 
 data class Image(
-    val path: String,
-    val extension: String,
+    val path: String?,
+    val extension: String?,
 )

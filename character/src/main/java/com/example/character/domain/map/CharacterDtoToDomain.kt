@@ -8,5 +8,9 @@ fun CharacterDto.toDomain() = Character(
     id = id.handleOpt(),
     name = name.handleOpt(),
     description = description.handleOpt(),
-    imageUrl = "${thumbnail?.path}.${thumbnail?.extension}",
+    imageUrl = if (thumbnail?.path == null || thumbnail.extension == null) {
+        ""
+    } else {
+        "${thumbnail.path}.${thumbnail.extension}"
+    }
 )

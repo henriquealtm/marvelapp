@@ -1,4 +1,4 @@
-package com.example.character
+package com.example.character.data
 
 import com.example.character.data.model.CharacterDataWrapper
 import com.example.character.data.model.CharacterDto
@@ -32,7 +32,7 @@ class CharacterRepositoryUnitTest {
     fun `WHEN calling getList() THEN return the list of CharacterDto equals to the service_getList()_data`() =
         runBlocking {
             coEvery { service.getList() } returns getWrapper()
-            assertEquals(getCharacterList(), repository.getList())
+            assertEquals(getCharacterDtoList(), repository.getList())
         }
 
 }
