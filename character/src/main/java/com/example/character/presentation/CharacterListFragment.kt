@@ -19,7 +19,7 @@ class CharacterListFragment : Fragment() {
     private val characterAdapter = CharacterListAdapter { character ->
         Toast.makeText(
             requireContext(),
-            "Clicked - ${character.name}",
+            character.name,
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -44,11 +44,16 @@ class CharacterListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
+        setupViewModel()
         setupObservers()
     }
 
     private fun setupRecyclerView() {
         binding.rvCharacter.adapter = characterAdapter
+    }
+
+    private fun setupViewModel() {
+        lifecycle.addObserver(characterListVm)
     }
 
     private fun setupObservers() {

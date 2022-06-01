@@ -18,10 +18,10 @@ data class CharacterDto(
     val id: Int?,
     val name: String?,
     val description: String?,
-    val thumbnail: Image
+    val thumbnail: Image?
 )
 
 data class Image(
-    val path: String,
-    val extension: String,
+    val path: String?,
+    val extension: String?,
 )
