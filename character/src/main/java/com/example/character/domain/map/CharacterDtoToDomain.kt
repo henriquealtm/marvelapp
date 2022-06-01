@@ -8,5 +8,5 @@ fun CharacterDto.toDomain() = Character(
     id = id.handleOpt(),
     name = name.handleOpt(),
     description = description.handleOpt(),
-    imageUrl = "${thumbnail.path}.${thumbnail.extension}",
+    imageUrl = "${thumbnail?.path}.${thumbnail?.extension}",
 )
