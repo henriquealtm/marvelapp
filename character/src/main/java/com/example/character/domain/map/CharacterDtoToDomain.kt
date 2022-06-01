@@ -2,7 +2,7 @@ package com.example.character.domain.map
 
 import com.example.character.data.model.CharacterDto
 import com.example.character.domain.model.Character
-import com.example.commons.handleOpt
+import com.example.commons.extension.handleOpt
 
 fun CharacterDto.toDomain() = Character(
     id = id.handleOpt(),

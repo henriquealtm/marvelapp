@@ -1,4 +1,4 @@
-package com.example.commons
+package com.example.commons.extension
 
 /**
  * Handle empty String
