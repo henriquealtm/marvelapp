@@ -1,7 +1,7 @@
 package com.example.character.presentation
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
-import com.example.character.R
 import com.example.character.domain.model.Character
 import com.example.character.domain.usecase.CharacterListUseCase
 import com.example.commons.commonsDrawable
@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class CharacterListViewModel(
     private val useCase: CharacterListUseCase,
-) : ViewModel() {
+) : ViewModel(), DefaultLifecycleObserver {
 
     // Search - Section
     val searchValue = MutableLiveData<String>()
@@ -26,7 +26,8 @@ class CharacterListViewModel(
         searchValue.value = ""
     }
 
-    private val resourceList = MutableLiveData<List<Character>>()
+    @VisibleForTesting
+    val resourceList = MutableLiveData<List<Character>>()
     val list = MediatorLiveData<List<Character>>().apply {
         addSource(resourceList) { list ->
             list?.let {
@@ -41,7 +42,9 @@ class CharacterListViewModel(
         }
     }
 
-    init {
+    override fun onResume(owner: LifecycleOwner) {
+        super.onResume(owner)
+
         viewModelScope.launch {
             resourceList.value = useCase.invoke()
         }
