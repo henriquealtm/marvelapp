@@ -145,4 +145,12 @@ class CharacterListViewModelUnitTest {
         }
     }
 
+    @Test
+    fun `WHEN onResume() is called THEN resourceList_value receives characterListUseCase's return value`() {
+        coEvery { characterListUseCase() } returns getCharacterList()
+        characterListVm.onResume(mockk())
+        assertEquals(getCharacterList(), characterListVm.resourceList.value)
+    }
+
+
 }
