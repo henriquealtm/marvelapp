@@ -1,12 +1,11 @@
 package com.example.marvelapp
 
 import android.app.Application
-import com.example.marvelapp.list.di.CharacterModule
+import com.example.marvelapp.list.di.InstrumentedTestCharacterModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
-@Suppress("unused")
-class MarvelApplication : Application() {
+class InstrumentedTestApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -15,8 +14,8 @@ class MarvelApplication : Application() {
 
     private fun startKoin() {
         startKoin {
-            androidContext(this@MarvelApplication)
-            modules(CharacterModule.module)
+            androidContext(this@InstrumentedTestApplication)
+            modules(InstrumentedTestCharacterModule.module)
         }
     }
 }
