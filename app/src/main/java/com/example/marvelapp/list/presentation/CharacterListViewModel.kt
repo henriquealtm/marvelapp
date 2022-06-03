@@ -2,15 +2,13 @@ package com.example.marvelapp.list.presentation
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
-import com.example.marvelapp.list.di.ChangeWhenTesting
+import com.example.commons.commonsDrawable
 import com.example.marvelapp.list.domain.model.Character
 import com.example.marvelapp.list.domain.usecase.CharacterListUseCase
-import com.example.commons.commonsDrawable
 import kotlinx.coroutines.launch
 
 class CharacterListViewModel(
     private val useCase: CharacterListUseCase,
-    val changeWhenTesting: ChangeWhenTesting
 ) : ViewModel(), DefaultLifecycleObserver {
 
     // Search - Section

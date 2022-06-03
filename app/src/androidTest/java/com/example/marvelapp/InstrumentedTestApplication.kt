@@ -1,7 +1,7 @@
 package com.example.marvelapp
 
 import android.app.Application
-import com.example.marvelapp.list.di.InstrumentedTestCharacterModule
+import com.example.marvelapp.list.data.InstrumentedTestCharacterModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 

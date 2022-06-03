@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.marvelapp.databinding.FragmentCharacterListBinding
-import com.example.marvelapp.list.di.CharacterModule
+import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.context.loadKoinModules
 
 class CharacterListFragment : Fragment() {
 
@@ -17,11 +15,7 @@ class CharacterListFragment : Fragment() {
     private val characterListVm: CharacterListViewModel by viewModel()
 
     private val characterAdapter = CharacterListAdapter { character ->
-        Toast.makeText(
-            requireContext(),
-            character.name,
-            Toast.LENGTH_SHORT
-        ).show()
+        Snackbar.make(binding.root, character.name, Snackbar.LENGTH_LONG).show()
     }
 
     override fun onCreateView(
