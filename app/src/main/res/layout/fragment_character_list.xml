@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.example.marvelapp.list.presentation.CharacterListViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/padding_normal">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/character_search_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="@={vm.searchValue}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_clear"
+            style="@style/Widget.Material3.Button.TextButton"
+            iconDrawable="@{vm.searchIcon}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:onClick="@{() -> vm.onClearButtonClick()}"
+            app:iconPadding="0dp"
+            app:iconSize="@dimen/icon_small"
+            app:iconTint="?attr/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="@+id/til_search"
+            app:layout_constraintEnd_toEndOf="@+id/til_search"
+            app:layout_constraintTop_toTopOf="@+id/til_search" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_character"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_search"
+            tools:listitem="@layout/item_character" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
