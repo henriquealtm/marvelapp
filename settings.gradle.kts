@@ -13,7 +13,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "MarvelApp"
-include ':app'
-include ':network'
-include ':commons'
-include ':analytics'
+
+include("app", "network", "network", "commons", "analytics")
