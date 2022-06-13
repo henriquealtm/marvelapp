@@ -9,7 +9,6 @@
         android:id="@+id/characterListFragment"
         android:name="com.example.marvelapp.list.presentation.CharacterListFragment"
         android:label="Character List"
-        app:moduleName="character"
         tools:layout="@layout/fragment_character_list" />
 
 </navigation>
