@@ -11,7 +11,8 @@ object AppDependencies {
 
     // Firebase
     const val firebasePlatform = "com.google.firebase:firebase-bom:${Versions.firebasePlatform}"
-    const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx:${Versions.firebaseAnalytics}"
+    const val firebaseAnalytics =
+        "com.google.firebase:firebase-analytics-ktx:${Versions.firebaseAnalytics}"
     const val firebaseCommon = "com.google.firebase:firebase-common-ktx:${Versions.firebaseCommon}"
 
     // Glide
@@ -22,7 +23,8 @@ object AppDependencies {
     private const val koin = "io.insert-koin:koin-android:${Versions.koin}"
 
     // LifeCycle
-    private const val liveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.liveDataKtx}"
+    private const val liveDataKtx =
+        "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.liveDataKtx}"
 
     // Navigation
     private const val navigationFragment =
@@ -45,11 +47,15 @@ object AppDependencies {
     // Unit test
     private const val junit = "junit:junit:${Versions.junit}"
     private const val koinTest = "io.insert-koin:koin-test:${Versions.koinTest}"
+    private const val mockk = "io.mockk:mockk:${Versions.mockk}"
+    private const val coreTesting = "androidx.arch.core:core-testing:${Versions.coreTesting}"
+    private const val coroutinesTesting = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutinesTesting}"
 
     // Instrumented test
     private const val instrumentedJUnit = "androidx.test.ext:junit:${Versions.extJunit}"
     private const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espresso}"
-    private const val espressoContrib = "androidx.test.espresso:espresso-contrib:${Versions.espresso}"
+    private const val espressoContrib =
+        "androidx.test.espresso:espresso-contrib:${Versions.espresso}"
     private const val runner = "androidx.test:runner:${Versions.runner}"
 
     val coreLibraries = arrayListOf<String>().apply {
@@ -95,6 +101,9 @@ object AppDependencies {
     val unitTestLibraries = arrayListOf<String>().apply {
         add(junit)
         add(koinTest)
+        add(mockk)
+        add(coreTesting)
+        add(coroutinesTesting)
     }
 }
 

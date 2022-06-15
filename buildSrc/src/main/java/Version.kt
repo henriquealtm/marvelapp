@@ -33,6 +33,9 @@ object Versions {
     // Unit test
     const val junit = "4.13.2"
     const val koinTest = "3.2.0"
+    const val mockk = "1.12.4"
+    const val coreTesting = "2.1.0"
+    const val coroutinesTesting = "1.4.2"
 
     // Instrumented test
     const val extJunit = "1.1.3"
