@@ -1,6 +1,6 @@
-package com.example.marvelapp.list.data.service
+package com.example.marvelapp.feature.list.data.service
 
-import com.example.marvelapp.list.data.model.CharacterDataWrapper
+import com.example.marvelapp.feature.list.data.model.CharacterDataWrapper
 import retrofit2.http.GET
 import retrofit2.http.Query
 

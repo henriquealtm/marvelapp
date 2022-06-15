@@ -7,7 +7,7 @@
 
         <variable
             name="character"
-            type="com.example.marvelapp.list.domain.model.Character" />
+            type="com.example.marvelapp.feature.list.domain.model.Character" />
 
     </data>
 

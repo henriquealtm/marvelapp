@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.example.marvelapp.list.presentation.CharacterListViewModel" />
+            type="com.example.marvelapp.feature.list.presentation.CharacterListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

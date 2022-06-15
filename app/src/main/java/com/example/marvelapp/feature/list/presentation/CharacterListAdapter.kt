@@ -1,4 +1,4 @@
-package com.example.marvelapp.list.presentation
+package com.example.marvelapp.feature.list.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.marvelapp.R
 import com.example.marvelapp.databinding.ItemCharacterBinding
-import com.example.marvelapp.list.domain.model.Character
+import com.example.marvelapp.feature.list.domain.model.Character
 
 internal class CharacterListAdapter(
     private val onItemClick: (Character) -> Unit,

@@ -1,4 +1,4 @@
-package com.example.marvelapp.list.data.model
+package com.example.marvelapp.feature.list.data.model
 
 data class CharacterDataWrapper(
     val code: Int?,

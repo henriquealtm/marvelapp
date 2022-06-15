@@ -1,7 +1,7 @@
-package com.example.marvelapp.list.domain.map
+package com.example.marvelapp.feature.list.domain.map
 
-import com.example.marvelapp.list.data.model.CharacterDto
-import com.example.marvelapp.list.domain.model.Character
+import com.example.marvelapp.feature.list.data.model.CharacterDto
+import com.example.marvelapp.feature.list.domain.model.Character
 import com.example.commons.extension.handleOpt
 
 fun CharacterDto.toDomain() = Character(
