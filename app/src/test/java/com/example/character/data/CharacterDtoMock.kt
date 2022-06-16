@@ -1,8 +1,8 @@
 package com.example.character.data
 
-import com.example.marvelapp.list.data.model.CharacterDataContainer
-import com.example.marvelapp.list.data.model.CharacterDataWrapper
-import com.example.marvelapp.list.data.model.CharacterDto
+import com.example.marvelapp.feature.list.data.model.CharacterDataContainer
+import com.example.marvelapp.feature.list.data.model.CharacterDataWrapper
+import com.example.marvelapp.feature.list.data.model.CharacterDto
 
 internal fun getSuccessCharacterDtoList() = listOf(
     CharacterDto(

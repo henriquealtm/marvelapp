@@ -4,10 +4,10 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.example.character.domain.getCharacterList
-import com.example.marvelapp.list.domain.model.Character
 import com.example.commons.commonsDrawable
-import com.example.marvelapp.list.domain.usecase.CharacterListUseCase
-import com.example.marvelapp.list.presentation.CharacterListViewModel
+import com.example.marvelapp.feature.list.domain.model.Character
+import com.example.marvelapp.feature.list.domain.usecase.CharacterListUseCase
+import com.example.marvelapp.feature.list.presentation.CharacterListViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
 import junit.framework.Assert.*
@@ -77,7 +77,6 @@ class CharacterListViewModelUnitTest {
             assertEquals("", searchValue.value)
         }
     }
-
 
     // Search Icon
     @Test

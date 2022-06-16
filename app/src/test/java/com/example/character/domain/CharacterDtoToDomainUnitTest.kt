@@ -1,9 +1,9 @@
 package com.example.character.domain
 
-import com.example.marvelapp.list.data.model.CharacterDto
-import com.example.marvelapp.list.data.model.Image
-import com.example.marvelapp.list.domain.map.toDomain
-import com.example.marvelapp.list.domain.model.Character
+import com.example.marvelapp.feature.list.data.model.CharacterDto
+import com.example.marvelapp.feature.list.data.model.Image
+import com.example.marvelapp.feature.list.domain.map.toDomain
+import com.example.marvelapp.feature.list.domain.model.Character
 import org.junit.Assert
 import org.junit.Test
 
