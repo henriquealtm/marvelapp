@@ -1,10 +1,10 @@
 package com.example.marvelapp.list.data
 
-import com.example.marvelapp.list.data.model.CharacterDataContainer
-import com.example.marvelapp.list.data.model.CharacterDataWrapper
-import com.example.marvelapp.list.data.model.CharacterDto
-import com.example.marvelapp.list.data.model.Image
-import com.example.marvelapp.list.data.service.CharacterService
+import com.example.marvelapp.feature.list.data.model.CharacterDataContainer
+import com.example.marvelapp.feature.list.data.model.CharacterDataWrapper
+import com.example.marvelapp.feature.list.data.model.CharacterDto
+import com.example.marvelapp.feature.list.data.model.Image
+import com.example.marvelapp.feature.list.data.service.CharacterService
 
 class CharacterServiceMock : CharacterService {
 

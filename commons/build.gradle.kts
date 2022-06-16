@@ -37,8 +37,11 @@ android {
 }
 
 dependencies {
+    implementation(project(":analytics"))
+
     implementation(AppDependencies.coreLibraries)
     implementation(AppDependencies.uiLibraries)
+    implementation(AppDependencies.koinLibraries)
 
     implementation(AppDependencies.glide)
     annotationProcessor(AppDependencies.glideCompiler)

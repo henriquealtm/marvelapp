@@ -1,6 +1,6 @@
-package com.example.marvelapp.list.data.repository
+package com.example.marvelapp.feature.list.data.repository
 
-import com.example.marvelapp.list.data.service.CharacterService
+import com.example.marvelapp.feature.list.data.service.CharacterService
 
 class CharacterRepository(
     private val service: CharacterService

@@ -1,4 +1,4 @@
-package com.example.marvelapp.list.domain.model
+package com.example.marvelapp.feature.list.domain.model
 
 data class Character(
     val id: Int,

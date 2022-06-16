@@ -1,4 +1,4 @@
-package com.example.marvelapp.list.di
+package com.example.marvelapp.di
 
 import com.example.analytics.IAnalyticsLog
 import com.example.analytics.firebase.FirebaseAnalyticsLog

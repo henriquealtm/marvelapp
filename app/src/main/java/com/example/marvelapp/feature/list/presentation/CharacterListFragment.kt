@@ -1,26 +1,21 @@
-package com.example.marvelapp.list.presentation
+package com.example.marvelapp.feature.list.presentation
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
-import com.example.analytics.CommonEvents
-import com.example.analytics.CommonParams
-import com.example.analytics.IAnalyticsLog
+import com.example.commons.presentation.BaseBindingFragment
+import com.example.marvelapp.R
 import com.example.marvelapp.databinding.FragmentCharacterListBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CharacterListFragment : Fragment() {
+class CharacterListFragment : BaseBindingFragment<FragmentCharacterListBinding>(
+    R.layout.fragment_character_list,
+    "CharacterListFragment",
+) {
 
-    private lateinit var binding: FragmentCharacterListBinding
     private val characterListVm: CharacterListViewModel by viewModel()
-
-    private val analyticsLog: IAnalyticsLog by inject()
 
     private val characterAdapter = CharacterListAdapter { character ->
         Snackbar.make(binding.root, character.name, Snackbar.LENGTH_LONG).show()
@@ -33,28 +28,12 @@ class CharacterListFragment : Fragment() {
         )
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = FragmentCharacterListBinding.inflate(inflater, container, false).apply {
-        lifecycleOwner = viewLifecycleOwner
-        vm = characterListVm
-        binding = this
-    }.root
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
         setupViewModel()
         setupObservers()
-        analyticsLog.logEvent(
-            CommonEvents.SHOW_FRAGMENT,
-            bundleOf(
-                CommonParams.FRAGMENT_NAME to this.javaClass.simpleName,
-            )
-        )
     }
 
     private fun setupRecyclerView() {
@@ -62,10 +41,24 @@ class CharacterListFragment : Fragment() {
     }
 
     private fun setupViewModel() {
+        binding.vm = characterListVm
         lifecycle.addObserver(characterListVm)
     }
 
     private fun setupObservers() {
+        observeBackNavigation()
+        observeList()
+    }
+
+    private fun observeBackNavigation() {
+        characterListVm.navigateBack.observe(viewLifecycleOwner) { mustNavigateBack ->
+            if (mustNavigateBack) {
+                requireActivity().onBackPressed()
+            }
+        }
+    }
+
+    private fun observeList() {
         characterListVm.list.observe(viewLifecycleOwner) { list ->
             characterAdapter.submitList(list)
         }
