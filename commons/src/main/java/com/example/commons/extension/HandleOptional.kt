@@ -11,3 +11,9 @@ fun String?.handleOpt() = this ?: ""
  * @return itself if not null or zero
  */
 fun Int?.handleOpt() = this ?: 0
+
+/**
+ * Handle empty Boolean
+ * @return itself if not null or false
+ */
+fun Boolean?.handleOpt() = this ?: false

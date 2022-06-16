@@ -1,6 +1,6 @@
 package com.example.character.domain
 
-import com.example.marvelapp.list.domain.model.Character
+import com.example.marvelapp.feature.list.domain.model.Character
 
 fun getCharacterList() = listOf(
     Character(

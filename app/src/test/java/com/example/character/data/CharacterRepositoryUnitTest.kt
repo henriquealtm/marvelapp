@@ -1,9 +1,9 @@
 package com.example.character.data
 
-import com.example.marvelapp.list.data.model.CharacterDataWrapper
-import com.example.marvelapp.list.data.model.CharacterDto
-import com.example.marvelapp.list.data.repository.CharacterRepository
-import com.example.marvelapp.list.data.service.CharacterService
+import com.example.marvelapp.feature.list.data.model.CharacterDataWrapper
+import com.example.marvelapp.feature.list.data.model.CharacterDto
+import com.example.marvelapp.feature.list.data.repository.CharacterRepository
+import com.example.marvelapp.feature.list.data.service.CharacterService
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking

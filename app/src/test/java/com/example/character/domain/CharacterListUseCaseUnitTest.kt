@@ -1,7 +1,8 @@
+package com.example.character.domain
+
 import com.example.character.data.getSuccessCharacterDtoList
-import com.example.marvelapp.list.data.repository.CharacterRepository
-import com.example.marvelapp.list.domain.usecase.CharacterListUseCase
-import com.example.marvelapp.list.domain.model.Character
+import com.example.marvelapp.feature.list.data.repository.CharacterRepository
+import com.example.marvelapp.feature.list.domain.usecase.CharacterListUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
