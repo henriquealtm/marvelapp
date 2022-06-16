@@ -4,17 +4,17 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
-import com.example.commons.fragment.BaseFragment
+import com.example.commons.presentation.BaseFragment
 import com.example.marvelapp.R
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @SuppressLint("CustomSplashScreen")
-class SplashScreenFragment : BaseFragment(
+class SplashFragment : BaseFragment(
     R.layout.fragment_splash,
     "SplashScreenFragment",
 ) {
 
-    private val splashVm: SplashScreenViewModel by viewModel()
+    private val splashVm: SplashViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -26,7 +26,7 @@ class SplashScreenFragment : BaseFragment(
         splashVm.navigateToListScreen.observe(viewLifecycleOwner) { mustNavigate ->
             if (mustNavigate) {
                 findNavController().navigate(
-                    SplashScreenFragmentDirections.goToCharacterListScreen()
+                    SplashFragmentDirections.goToCharacterListScreen()
                 )
             }
         }

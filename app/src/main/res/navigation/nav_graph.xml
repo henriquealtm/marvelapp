@@ -3,7 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/characterListFragment">
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.marvelapp.feature.splash.presentation.SplashFragment"
+        android:label="Splash"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/goToCharacterListScreen"
+            app:destination="@id/characterListFragment"
+            app:popUpTo="@id/nav_graph" />
+    </fragment>
 
     <fragment
         android:id="@+id/characterListFragment"

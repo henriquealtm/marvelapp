@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class SplashScreenViewModel : ViewModel() {
+class SplashViewModel : ViewModel() {
 
     private val _navigateToListScreen = MutableLiveData(false)
     val navigateToListScreen: LiveData<Boolean> = _navigateToListScreen

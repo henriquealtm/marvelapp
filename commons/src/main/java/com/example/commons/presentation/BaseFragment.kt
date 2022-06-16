@@ -1,4 +1,4 @@
-package com.example.commons.fragment
+package com.example.commons.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater

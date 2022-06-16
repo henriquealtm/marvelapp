@@ -3,13 +3,14 @@ package com.example.marvelapp.feature.list.presentation
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
 import com.example.commons.commonsDrawable
+import com.example.commons.presentation.BaseViewModel
 import com.example.marvelapp.feature.list.domain.model.Character
 import com.example.marvelapp.feature.list.domain.usecase.CharacterListUseCase
 import kotlinx.coroutines.launch
 
 class CharacterListViewModel(
     private val useCase: CharacterListUseCase,
-) : ViewModel(), DefaultLifecycleObserver {
+) : BaseViewModel(), DefaultLifecycleObserver {
 
     // Search - Section
     val searchValue = MutableLiveData<String>()

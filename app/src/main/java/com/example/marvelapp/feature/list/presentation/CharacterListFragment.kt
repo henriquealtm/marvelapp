@@ -3,7 +3,7 @@ package com.example.marvelapp.feature.list.presentation
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
-import com.example.commons.fragment.BaseBindingFragment
+import com.example.commons.presentation.BaseBindingFragment
 import com.example.marvelapp.R
 import com.example.marvelapp.databinding.FragmentCharacterListBinding
 import com.google.android.material.snackbar.Snackbar
@@ -46,6 +46,19 @@ class CharacterListFragment : BaseBindingFragment<FragmentCharacterListBinding>(
     }
 
     private fun setupObservers() {
+        observeBackNavigation()
+        observeList()
+    }
+
+    private fun observeBackNavigation() {
+        characterListVm.navigateBack.observe(viewLifecycleOwner) { mustNavigateBack ->
+            if (mustNavigateBack) {
+                requireActivity().onBackPressed()
+            }
+        }
+    }
+
+    private fun observeList() {
         characterListVm.list.observe(viewLifecycleOwner) { list ->
             characterAdapter.submitList(list)
         }
