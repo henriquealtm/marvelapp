@@ -15,12 +15,13 @@ import com.example.marvelapp.R
 import com.example.marvelapp.commons.RecyclerViewItemCountAssertion
 import com.example.marvelapp.commons.RecyclerViewMatcher
 import com.example.marvelapp.list.data.CharacterServiceMock
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
+@ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class CharacterListInstrumentedTest {
@@ -36,6 +37,9 @@ class CharacterListInstrumentedTest {
         activityRule.scenario.onActivity {
             decorView = it.window.decorView
         }
+
+        // The time spent in the Splash Screen
+        Thread.sleep(3_000)
     }
 
     @Test

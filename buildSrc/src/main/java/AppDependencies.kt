@@ -96,6 +96,7 @@ object AppDependencies {
         add(espressoContrib)
         add(runner)
         add(koinTest)
+        add(coroutinesTesting)
     }
 
     val unitTestLibraries = arrayListOf<String>().apply {
