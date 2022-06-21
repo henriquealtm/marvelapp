@@ -34,52 +34,113 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_search"
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            goneUnless="@{vm.resourceList.showLoading}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/app_bar"
+            tools:visibility="gone" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_error_container"
+            goneUnless="@{vm.resourceList.showError}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_normal"
-            android:hint="@string/character_search_hint"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/app_bar"
+            tools:visibility="gone">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ops"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:text="@string/an_error_has_occurred"
+                android:textColor="@color/darkest_gray"
+                android:textSize="14sp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:text="@string/try_again" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_success_container"
+            goneUnless="@{vm.resourceList.showData}"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/app_bar">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_search"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_search"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:text="@={vm.searchValue}" />
+                android:layout_marginHorizontal="@dimen/margin_normal"
+                android:hint="@string/character_search_hint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:text="@={vm.searchValue}" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_clear"
-            style="@style/Widget.Material3.Button.TextButton"
-            iconDrawable="@{vm.searchIcon}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
-            android:onClick="@{() -> vm.onClearButtonClick()}"
-            app:iconPadding="0dp"
-            app:iconSize="@dimen/icon_small"
-            app:iconTint="?attr/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="@+id/til_search"
-            app:layout_constraintEnd_toEndOf="@+id/til_search"
-            app:layout_constraintTop_toTopOf="@+id/til_search" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_character"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginHorizontal="@dimen/margin_normal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_search"
-            tools:listitem="@layout/item_character" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_clear"
+                style="@style/Widget.Material3.Button.TextButton"
+                iconDrawable="@{vm.searchIcon}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:onClick="@{() -> vm.onClearButtonClick()}"
+                app:iconPadding="0dp"
+                app:iconSize="@dimen/icon_small"
+                app:iconTint="?attr/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="@+id/til_search"
+                app:layout_constraintEnd_toEndOf="@+id/til_search"
+                app:layout_constraintTop_toTopOf="@+id/til_search" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_character"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="@dimen/margin_normal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_search"
+                tools:listitem="@layout/item_character" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

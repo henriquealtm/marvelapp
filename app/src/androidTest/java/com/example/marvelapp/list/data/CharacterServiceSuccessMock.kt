@@ -5,8 +5,9 @@ import com.example.marvelapp.feature.list.data.model.CharacterDataWrapper
 import com.example.marvelapp.feature.list.data.model.CharacterDto
 import com.example.marvelapp.feature.list.data.model.Image
 import com.example.marvelapp.feature.list.data.service.CharacterService
+import kotlinx.coroutines.delay
 
-class CharacterServiceMock : CharacterService {
+class CharacterServiceSuccessMock : CharacterService {
 
     val list = listOf(
         CharacterDto(
@@ -46,10 +47,32 @@ class CharacterServiceMock : CharacterService {
         results = list,
     )
 
-    override suspend fun getList(name: String?) = CharacterDataWrapper(
-        code = 200,
-        status = "success",
-        data = data,
-    )
+    override suspend fun getList(name: String?): CharacterDataWrapper {
+//        delay(1000)
+        return CharacterDataWrapper(
+            code = 200,
+            status = "success",
+            data = data,
+        )
+    }
+
+}
+
+class CharacterServiceLoadingMock : CharacterService {
+
+    override suspend fun getList(name: String?): CharacterDataWrapper {
+        delay(1000)
+        return CharacterDataWrapper(
+            code = 200,
+            status = "success",
+            data = null,
+        )
+    }
+
+}
+
+class CharacterServiceErrorMock : CharacterService {
+
+    override suspend fun getList(name: String?) = throw Exception()
 
 }

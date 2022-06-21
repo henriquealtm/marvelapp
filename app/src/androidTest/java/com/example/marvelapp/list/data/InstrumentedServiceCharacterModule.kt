@@ -10,14 +10,16 @@ import org.koin.dsl.module
 
 object InstrumentedTestCharacterModule {
 
-    val module = module {
+    fun module(
+        serviceMock: CharacterService
+    ) = module {
         viewModel { CharacterListViewModel(useCase = get()) }
 
         factory { CharacterListUseCase(repository = get()) }
 
         single<ICharacterRepository> { CharacterRepository(get()) }
 
-        single<CharacterService> { CharacterServiceMock() }
+        single<CharacterService> { serviceMock }
 
     }
 
