@@ -3,6 +3,8 @@ package com.example.marvelapp.feature.list.presentation
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
 import com.example.commons.commonsDrawable
+import com.example.commons.data.DataResource
+import com.example.commons.data.resource
 import com.example.commons.presentation.BaseViewModel
 import com.example.marvelapp.feature.list.domain.model.Character
 import com.example.marvelapp.feature.list.domain.usecase.CharacterListUseCase
@@ -28,16 +30,16 @@ class CharacterListViewModel(
     }
 
     @VisibleForTesting
-    val resourceList = MutableLiveData<List<Character>>()
+    val resourceList: DataResource<List<Character>> = resource { useCase() }
     val list = MediatorLiveData<List<Character>>().apply {
-        addSource(resourceList) { list ->
+        addSource(resourceList.data) { list ->
             list?.let {
                 value = list
             }
         }
 
         addSource(searchValue) { searchValue ->
-            value = resourceList.value?.filter {
+            value = resourceList.data.value?.filter {
                 it.name.contains(searchValue, true)
             }
         }
@@ -46,8 +48,8 @@ class CharacterListViewModel(
     override fun onResume(owner: LifecycleOwner) {
         super.onResume(owner)
 
-      viewModelScope.launch {
-            resourceList.value = useCase.invoke()
+        viewModelScope.launch {
+            resourceList.loadData()
         }
     }
 

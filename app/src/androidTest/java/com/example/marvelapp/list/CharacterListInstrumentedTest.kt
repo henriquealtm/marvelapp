@@ -5,8 +5,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
@@ -14,12 +13,16 @@ import com.example.marvelapp.MainActivity
 import com.example.marvelapp.R
 import com.example.marvelapp.commons.RecyclerViewItemCountAssertion
 import com.example.marvelapp.commons.RecyclerViewMatcher
-import com.example.marvelapp.list.data.CharacterServiceMock
+import com.example.marvelapp.list.data.CharacterServiceErrorMock
+import com.example.marvelapp.list.data.CharacterServiceLoadingMock
+import com.example.marvelapp.list.data.CharacterServiceSuccessMock
+import com.example.marvelapp.list.data.InstrumentedTestCharacterModule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.context.loadKoinModules
 
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
@@ -29,7 +32,7 @@ class CharacterListInstrumentedTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
-    private val dataList = CharacterServiceMock().list
+    private val dataList = CharacterServiceSuccessMock().list
     private lateinit var decorView: View
 
     @Before
@@ -42,13 +45,20 @@ class CharacterListInstrumentedTest {
         Thread.sleep(3_000)
     }
 
+    // Resource Success
+    private fun loadSuccessMock() {
+        loadKoinModules(InstrumentedTestCharacterModule.module(CharacterServiceSuccessMock()))
+    }
+
     @Test
     fun characterListVerifyListSize() {
+        loadSuccessMock()
         onView(withId(R.id.rv_character)).check(RecyclerViewItemCountAssertion(3))
     }
 
     @Test
     fun characterListVerifyContentOnItemView() {
+        loadSuccessMock()
         dataList.forEachIndexed { index, characterDto ->
             onView(
                 RecyclerViewMatcher(R.id.rv_character).atPositionOnView(
@@ -67,6 +77,7 @@ class CharacterListInstrumentedTest {
 
     @Test
     fun characterListVerifyClickItemAndToastText() {
+        loadSuccessMock()
         dataList.forEachIndexed { index, characterDto ->
             onView(
                 RecyclerViewMatcher(R.id.rv_character).atPositionOnView(
@@ -81,6 +92,7 @@ class CharacterListInstrumentedTest {
 
     @Test
     fun characterListVerifyFilter() {
+        loadSuccessMock()
         onView(withId(R.id.et_search)).perform(typeText("3D-Man"))
         onView(withId(R.id.rv_character)).check(RecyclerViewItemCountAssertion(1))
         onView(withId(R.id.btn_clear)).perform(click())
@@ -92,5 +104,27 @@ class CharacterListInstrumentedTest {
         onView(withId(R.id.et_search)).perform(typeText("9"))
         onView(withId(R.id.rv_character)).check(RecyclerViewItemCountAssertion(0))
     }
-    
+
+    // Resource Loading (delay)
+    private fun loadLoadingMock() {
+        loadKoinModules(InstrumentedTestCharacterModule.module(CharacterServiceLoadingMock()))
+    }
+
+    @Test
+    fun characterListProgressBarVisible() {
+        loadLoadingMock()
+        onView(withId(R.id.progress_bar)).check(matches(isDisplayed()))
+    }
+
+    // Resource Loading (delay)
+    private fun loadErrorMock() {
+        loadKoinModules(InstrumentedTestCharacterModule.module(CharacterServiceErrorMock()))
+    }
+
+    @Test
+    fun characterListProgressBarVisible2() {
+        loadErrorMock()
+        onView(withId(R.id.ll_error_container)).check(matches(isDisplayed()))
+    }
+
 }

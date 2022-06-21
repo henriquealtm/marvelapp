@@ -21,7 +21,6 @@ class InstrumentedTestApplication : Application() {
             modules(
                 CommonsModule.module,
                 SplashModule.module,
-                InstrumentedTestCharacterModule.module
             )
         }
     }

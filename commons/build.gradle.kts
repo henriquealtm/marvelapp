@@ -42,6 +42,7 @@ dependencies {
     implementation(AppDependencies.coreLibraries)
     implementation(AppDependencies.uiLibraries)
     implementation(AppDependencies.koinLibraries)
+    implementation(AppDependencies.lifecycleLibraries)
 
     implementation(AppDependencies.glide)
     annotationProcessor(AppDependencies.glideCompiler)

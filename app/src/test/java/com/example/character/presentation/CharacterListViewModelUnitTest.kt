@@ -3,6 +3,7 @@ package com.example.character.presentation
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import com.example.CoroutinesMainTestRule
 import com.example.character.domain.getCharacterList
 import com.example.commons.commonsDrawable
 import com.example.marvelapp.feature.list.domain.model.Character
@@ -11,11 +12,7 @@ import com.example.marvelapp.feature.list.presentation.CharacterListViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
 import junit.framework.Assert.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -26,7 +23,8 @@ class CharacterListViewModelUnitTest {
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
-    private val testDispatcher = TestCoroutineDispatcher()
+    @get:Rule
+    val coroutineRule = CoroutinesMainTestRule()
 
     private var characterListUseCase = mockk<CharacterListUseCase>(relaxed = true)
     private lateinit var characterListVm: CharacterListViewModel
@@ -38,7 +36,6 @@ class CharacterListViewModelUnitTest {
 
     @Before
     fun prepare() {
-        Dispatchers.setMain(testDispatcher)
         characterListVm = CharacterListViewModel(characterListUseCase)
         prepareObservers()
     }
@@ -46,20 +43,19 @@ class CharacterListViewModelUnitTest {
     private fun prepareObservers() {
         characterListVm.searchValue.observeForever(searchValueObserver)
         characterListVm.searchIcon.observeForever(searchIconObserver)
-        characterListVm.resourceList.observeForever(resourceListObserver)
+        characterListVm.resourceList.data.observeForever(resourceListObserver)
         characterListVm.list.observeForever(listObserver)
     }
 
     @After
     fun cleanUp() {
-        Dispatchers.resetMain()
         cleanUpObservers()
     }
 
     private fun cleanUpObservers() {
         characterListVm.searchValue.removeObserver(searchValueObserver)
         characterListVm.searchIcon.removeObserver(searchIconObserver)
-        characterListVm.resourceList.removeObserver(resourceListObserver)
+        characterListVm.resourceList.data.removeObserver(resourceListObserver)
         characterListVm.list.removeObserver(listObserver)
     }
 
@@ -103,12 +99,11 @@ class CharacterListViewModelUnitTest {
         }
     }
 
-    // Search Value
+    // Resource list
     @Test
     fun `GIVEN the initial state of CharacterListViewModel THEN resourceList_value is null`() {
-        assertNull(characterListVm.resourceList.value)
+        assertNull(characterListVm.resourceList.data.value)
     }
-
 
     @Test
     fun `GIVEN resourceList_value is null THEN list_value is null`() {
