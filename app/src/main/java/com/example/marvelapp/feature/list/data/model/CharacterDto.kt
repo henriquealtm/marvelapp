@@ -3,10 +3,10 @@ package com.example.marvelapp.feature.list.data.model
 data class CharacterDataWrapper(
     val code: Int?,
     val status: String?,
-    val data: CharacterDataContainer?,
+    val data: CharacterDataContainerDto?,
 )
 
-data class CharacterDataContainer(
+data class CharacterDataContainerDto(
     val offset: Int?,
     val limit: Int?,
     val total: Int?,
