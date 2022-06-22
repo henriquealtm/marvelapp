@@ -40,14 +40,13 @@ class CharacterListInstrumentedTest {
         activityRule.scenario.onActivity {
             decorView = it.window.decorView
         }
-
-        // The time spent in the Splash Screen
-        Thread.sleep(3_000)
     }
 
     // Resource Success
     private fun loadSuccessMock() {
         loadKoinModules(InstrumentedTestCharacterModule.module(CharacterServiceSuccessMock()))
+        // The time spent in the Splash Screen
+        Thread.sleep(3_500)
     }
 
     @Test
@@ -108,6 +107,8 @@ class CharacterListInstrumentedTest {
     // Resource Loading (delay)
     private fun loadLoadingMock() {
         loadKoinModules(InstrumentedTestCharacterModule.module(CharacterServiceLoadingMock()))
+        // The time spent in the Splash Screen
+        Thread.sleep(3_500)
     }
 
     @Test
@@ -119,10 +120,12 @@ class CharacterListInstrumentedTest {
     // Resource Loading (delay)
     private fun loadErrorMock() {
         loadKoinModules(InstrumentedTestCharacterModule.module(CharacterServiceErrorMock()))
+        // The time spent in the Splash Screen
+        Thread.sleep(3_500)
     }
 
     @Test
-    fun characterListProgressBarVisible2() {
+    fun characterListErrorContainerVisible() {
         loadErrorMock()
         onView(withId(R.id.ll_error_container)).check(matches(isDisplayed()))
     }

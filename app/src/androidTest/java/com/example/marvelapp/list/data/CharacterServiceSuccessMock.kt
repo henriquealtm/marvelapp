@@ -47,14 +47,12 @@ class CharacterServiceSuccessMock : CharacterService {
         results = list,
     )
 
-    override suspend fun getList(name: String?): CharacterDataWrapper {
-//        delay(1000)
-        return CharacterDataWrapper(
-            code = 200,
-            status = "success",
-            data = data,
-        )
-    }
+    override suspend fun getList(name: String?) = CharacterDataWrapper(
+        code = 200,
+        status = "success",
+        data = data,
+    )
+
 
 }
 
