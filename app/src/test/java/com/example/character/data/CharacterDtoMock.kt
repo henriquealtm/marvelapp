@@ -1,6 +1,6 @@
 package com.example.character.data
 
-import com.example.marvelapp.feature.list.data.model.CharacterDataContainer
+import com.example.marvelapp.feature.list.data.model.CharacterDataContainerDto
 import com.example.marvelapp.feature.list.data.model.CharacterDataWrapper
 import com.example.marvelapp.feature.list.data.model.CharacterDto
 
@@ -19,7 +19,7 @@ internal fun getSuccessCharacterDtoList() = listOf(
     )
 )
 
-internal fun getSuccessContainer() = CharacterDataContainer(
+internal fun getSuccessContainer() = CharacterDataContainerDto(
     offset = 1,
     limit = 20,
     total = 100,

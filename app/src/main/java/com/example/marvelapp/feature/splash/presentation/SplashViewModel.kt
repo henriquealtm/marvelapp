@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class SplashViewModel : ViewModel() {
 
-    private val splashScreenTime = 3_000L
+    private val splashScreenTime = 1_000L
 
     private val _navigateToListScreen = MutableLiveData(false)
     val navigateToListScreen: LiveData<Boolean> = _navigateToListScreen

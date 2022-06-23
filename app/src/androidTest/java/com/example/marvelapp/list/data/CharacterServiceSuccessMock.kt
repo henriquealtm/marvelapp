@@ -1,6 +1,6 @@
 package com.example.marvelapp.list.data
 
-import com.example.marvelapp.feature.list.data.model.CharacterDataContainer
+import com.example.marvelapp.feature.list.data.model.CharacterDataContainerDto
 import com.example.marvelapp.feature.list.data.model.CharacterDataWrapper
 import com.example.marvelapp.feature.list.data.model.CharacterDto
 import com.example.marvelapp.feature.list.data.model.Image
@@ -39,7 +39,7 @@ class CharacterServiceSuccessMock : CharacterService {
         ),
     )
 
-    private val data = CharacterDataContainer(
+    private val data = CharacterDataContainerDto(
         offset = 0,
         limit = 20,
         total = 100,
@@ -47,7 +47,10 @@ class CharacterServiceSuccessMock : CharacterService {
         results = list,
     )
 
-    override suspend fun getList(name: String?) = CharacterDataWrapper(
+    override suspend fun getList(
+        offset: Int?,
+        name: String?,
+    ) = CharacterDataWrapper(
         code = 200,
         status = "success",
         data = data,
@@ -58,7 +61,10 @@ class CharacterServiceSuccessMock : CharacterService {
 
 class CharacterServiceLoadingMock : CharacterService {
 
-    override suspend fun getList(name: String?): CharacterDataWrapper {
+    override suspend fun getList(
+        offset: Int?,
+        name: String?,
+    ): CharacterDataWrapper {
         delay(1000)
         return CharacterDataWrapper(
             code = 200,
@@ -71,6 +77,9 @@ class CharacterServiceLoadingMock : CharacterService {
 
 class CharacterServiceErrorMock : CharacterService {
 
-    override suspend fun getList(name: String?) = throw Exception()
+    override suspend fun getList(
+        offset: Int?,
+        name: String?,
+    ) = throw Exception()
 
 }

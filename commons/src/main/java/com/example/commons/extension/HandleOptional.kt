@@ -17,3 +17,9 @@ fun Int?.handleOpt() = this ?: 0
  * @return itself if not null or false
  */
 fun Boolean?.handleOpt() = this ?: false
+
+/**
+ * Handle empty list
+ * @return itself if not null or an empty list
+ */
+fun <T> List<T>?.handleOpt() = this ?: listOf()

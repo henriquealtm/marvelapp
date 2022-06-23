@@ -7,6 +7,9 @@ class CharacterListUseCase(
     private val repository: ICharacterRepository
 ) {
 
-    suspend operator fun invoke() = repository.getList().map { it.toDomain() }
+    suspend operator fun invoke(
+        offset: Int?,
+        name: String?,
+    ) = repository.getList(offset, name).toDomain()
 
 }

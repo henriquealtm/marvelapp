@@ -10,9 +10,9 @@ import kotlinx.coroutines.flow.map
 
 abstract class DataResource<T>  {
 
-    private val _callStarter = MutableLiveData<Unit>()
+    val callStarter = MediatorLiveData<Unit>()
 
-    private val resource = _callStarter
+    private val resource = callStarter
         .switchMap { loadResource() }
         .asFlow()
 
@@ -44,10 +44,6 @@ abstract class DataResource<T>  {
         .distinctUntilChanged()
         .asLiveData()
 
-
-    fun loadData() {
-        _callStarter.value = Unit
-    }
 
     private fun loadResource(): LiveData<Result<T>> = liveData {
         emit(Result.Loading())
