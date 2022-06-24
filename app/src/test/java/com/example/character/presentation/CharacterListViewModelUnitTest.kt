@@ -4,12 +4,16 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.example.CoroutinesMainTestRule
-import com.example.character.domain.getCharacterList
+import com.example.character.domain.getCharacterDomainContainer
+import com.example.character.domain.getCharacterDomainContainerWithEmptyResult
 import com.example.commons.commonsDrawable
+import com.example.commons.extension.handleOpt
 import com.example.marvelapp.feature.list.domain.model.Character
+import com.example.marvelapp.feature.list.domain.model.CharacterDomainContainer
 import com.example.marvelapp.feature.list.domain.usecase.CharacterListUseCase
 import com.example.marvelapp.feature.list.presentation.CharacterListViewModel
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
 import junit.framework.Assert.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,12 +21,14 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import kotlin.test.assertTrue
 
 @ExperimentalCoroutinesApi
 class CharacterListViewModelUnitTest {
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
+
     @get:Rule
     val coroutineRule = CoroutinesMainTestRule()
 
@@ -31,8 +37,10 @@ class CharacterListViewModelUnitTest {
 
     private val searchValueObserver = Observer<String> {}
     private val searchIconObserver = Observer<Int> {}
-    private val resourceListObserver = Observer<List<Character>> {}
+    private val resourceCharacterContainer = Observer<CharacterDomainContainer> {}
     private val listObserver = Observer<List<Character>> {}
+    private val scrollToBottomObserver = Observer<Boolean> {}
+    private val showCharacterListObserver = Observer<Boolean?> {}
 
     @Before
     fun prepare() {
@@ -43,8 +51,10 @@ class CharacterListViewModelUnitTest {
     private fun prepareObservers() {
         characterListVm.searchValue.observeForever(searchValueObserver)
         characterListVm.searchIcon.observeForever(searchIconObserver)
-        characterListVm.resourceList.data.observeForever(resourceListObserver)
+        characterListVm.resourceCharacterContainer.data.observeForever(resourceCharacterContainer)
         characterListVm.list.observeForever(listObserver)
+        characterListVm.scrollToBottom.observeForever(scrollToBottomObserver)
+        characterListVm.showCharacterList.observeForever(showCharacterListObserver)
     }
 
     @After
@@ -55,8 +65,10 @@ class CharacterListViewModelUnitTest {
     private fun cleanUpObservers() {
         characterListVm.searchValue.removeObserver(searchValueObserver)
         characterListVm.searchIcon.removeObserver(searchIconObserver)
-        characterListVm.resourceList.data.removeObserver(resourceListObserver)
+        characterListVm.resourceCharacterContainer.data.removeObserver(resourceCharacterContainer)
         characterListVm.list.removeObserver(listObserver)
+        characterListVm.scrollToBottom.removeObserver(scrollToBottomObserver)
+        characterListVm.showCharacterList.removeObserver(showCharacterListObserver)
     }
 
     // Search Value
@@ -102,40 +114,127 @@ class CharacterListViewModelUnitTest {
     // Resource list
     @Test
     fun `GIVEN the initial state of CharacterListViewModel THEN resourceList_value is null`() {
-        assertNull(characterListVm.resourceList.data.value)
+        assertNull(characterListVm.resourceCharacterContainer.data.value)
     }
 
     @Test
     fun `GIVEN resourceList_value is null THEN list_value is null`() {
+        characterListVm.run { assertNull(list.value) }
+    }
+
+    @Test
+    fun `GIVEN initial state WHEN calling onResume() THEN list_value has a list with the same two items returned from UseCase`() {
         characterListVm.run {
-            assertNull(list.value)
+            coEvery { characterListUseCase(any(), any()) } returns getCharacterDomainContainer()
+            val lifecycleOwner = mockk<LifecycleOwner>()
+            onResume(lifecycleOwner)
+            coVerify {
+                characterListUseCase(any(), any())
+            }
         }
     }
 
     @Test
-    fun `GIVEN resourceList_value a list with two items THEN list_value has a list with the same two items`() {
+    fun `GIVEN initial state WHEN calling loadMoreCharacters() THEN list_value has a list with the same two items returned from UseCase`() {
         characterListVm.run {
-            coEvery { characterListUseCase() } returns getCharacterList()
-            val lifecycleOwner = mockk<LifecycleOwner>()
-            onResume(lifecycleOwner)
-            assertEquals(getCharacterList(), list.value)
+            coEvery { characterListUseCase(any(), any()) } returns getCharacterDomainContainer()
+            loadMoreCharacters()
+            coVerify {
+                characterListUseCase(any(), any())
+            }
         }
     }
 
     @Test
-    fun `GIVEN resourceList_value a list with two items WHEN update the searchValue_value to match one item of the list THEN the list_value size is equal to one`() {
+    fun `GIVEN initial state WHEN updating the searchValue_value THEN list_value has a list with the same two items returned from UseCase`() {
         characterListVm.run {
-            coEvery { characterListUseCase() } returns getCharacterList()
-            val lifecycleOwner = mockk<LifecycleOwner>()
-            onResume(lifecycleOwner)
-            searchValue.value = "3D"
-            assertTrue(list.value?.size == 1)
-            searchValue.value = ""
-            assertTrue(list.value?.size == 2)
-            searchValue.value = "Spider"
-            assertTrue(list.value?.size == 1)
-            searchValue.value = "ADBCDEF"
-            assertTrue(list.value?.size == 0)
+            coEvery { characterListUseCase(any(), any()) } returns getCharacterDomainContainer()
+            searchValue.value = "123"
+            coVerify {
+                characterListUseCase(any(), any())
+            }
+        }
+    }
+
+    @Test
+    fun `GIVEN the initial state of CharacterListViewModel THEN showCharacterList is null`() {
+        assertNull(characterListVm.showCharacterList.value)
+    }
+
+    @Test
+    fun `GIVEN the initial state WHEN list_value is empty THEN showCharacterList is false`() {
+        characterListVm.run {
+            coEvery {
+                characterListUseCase(any(), any())
+            } returns getCharacterDomainContainerWithEmptyResult()
+            loadMoreCharacters()
+            assertFalse(characterListVm.showCharacterList.value.handleOpt())
+        }
+    }
+
+    @Test
+    fun `GIVEN the initial state WHEN list_value is empty THEN showCharacterList is true`() {
+        characterListVm.run {
+            coEvery {
+                characterListUseCase(any(), any())
+            } returns getCharacterDomainContainer()
+            loadMoreCharacters()
+            assertTrue(characterListVm.showCharacterList.value.handleOpt())
+        }
+    }
+
+    // Load More characters
+    @Test
+    fun `GIVEN the initial state of CharacterListViewModel THEN _loadMoreCharacters_value is null`() {
+        assertNull(characterListVm.loadMoreCharacters.value)
+    }
+
+    @Test
+    fun `GIVEN the initial state WHEN loadMoreCharacters() is called THEN _loadMoreCharacters_value is Unit`() {
+        characterListVm.loadMoreCharacters()
+        assertEquals(Unit, characterListVm.loadMoreCharacters.value)
+    }
+
+    // On Resume
+    @Test
+    fun `GIVEN the initial state of CharacterListViewModel THEN _onResume_value is null`() {
+        assertNull(characterListVm.onResume.value)
+    }
+
+    @Test
+    fun `GIVEN the initial state WHEN loadMoreCharacters() is called THEN _onResume_value is Unit`() {
+        val lifecycleOwner = mockk<LifecycleOwner>()
+        characterListVm.onResume(lifecycleOwner)
+        assertEquals(Unit, characterListVm.onResume.value)
+    }
+
+    // On Resume
+    @Test
+    fun `GIVEN the initial state of CharacterListViewModel THEN scrollToBottom_value is null`() {
+        assertNull(characterListVm.scrollToBottom.value)
+    }
+
+    @Test
+    fun `GIVEN the initial state WHEN loadMoreCharacters() is called THEN _scrollToBottom_value is Unit`() {
+        characterListVm.loadMoreCharacters()
+        assertTrue(characterListVm.scrollToBottom.value.handleOpt())
+    }
+
+    // Current offset
+    @Test
+    fun `GIVEN the initial state of CharacterListViewModel THEN currentOffset is 0`() {
+        assertEquals(0, characterListVm.currentOffset)
+    }
+
+    @Test
+    fun `GIVEN initial initial state WHEN resourceCharacterContainer_data has new value changed the currentOffset must have the sum of its current value plus the result_count`() {
+        characterListVm.run {
+            currentOffset = 10
+            coEvery { characterListUseCase(any(), any()) } returns getCharacterDomainContainer()
+            characterListVm.loadMoreCharacters()
+            assertEquals(30, currentOffset)
+            characterListVm.loadMoreCharacters()
+            assertEquals(50, currentOffset)
         }
     }
 
