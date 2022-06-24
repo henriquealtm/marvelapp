@@ -1,5 +1,6 @@
 package com.example.marvelapp.feature.list.presentation
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
 import com.example.commons.commonsDrawable
 import com.example.commons.data.DataResource
@@ -9,7 +10,6 @@ import com.example.commons.presentation.BaseViewModel
 import com.example.marvelapp.feature.list.domain.model.Character
 import com.example.marvelapp.feature.list.domain.model.CharacterDomainContainer
 import com.example.marvelapp.feature.list.domain.usecase.CharacterListUseCase
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class CharacterListViewModel(
@@ -32,7 +32,8 @@ class CharacterListViewModel(
     }
 
     // Character List - Section
-    private var currentOffset = 0
+    @VisibleForTesting
+    var currentOffset = 0
 
     val resourceCharacterContainer: DataResource<CharacterDomainContainer> = resource {
         val name = searchValue.value.takeIf { it.handleOpt().isNotEmpty() }
@@ -54,17 +55,19 @@ class CharacterListViewModel(
         }
     }
 
-    private val _loadMoreCharacters = MutableLiveData<Unit>()
+    @VisibleForTesting
+    val loadMoreCharacters = MutableLiveData<Unit>()
     fun loadMoreCharacters() {
-        _loadMoreCharacters.value = Unit
+        loadMoreCharacters.value = Unit
     }
 
-    val scrollToBottom = _loadMoreCharacters.map { true }
+    val scrollToBottom = loadMoreCharacters.map { true }
 
-    private val _onResume = MutableLiveData<Unit>()
+    @VisibleForTesting
+    val onResume = MutableLiveData<Unit>()
     override fun onResume(owner: LifecycleOwner) {
         super.onResume(owner)
-        _onResume.value = Unit
+        onResume.value = Unit
     }
 
     // Show List - Section
@@ -74,14 +77,14 @@ class CharacterListViewModel(
         viewModelScope.launch {
             // TODO - Create a method to add new sources
             resourceCharacterContainer.callStarter.run {
-                addSource(_onResume) {
+                addSource(onResume) {
                     value = Unit
                 }
                 addSource(searchValue) {
                     currentOffset = 0
                     value = Unit
                 }
-                addSource(_loadMoreCharacters) {
+                addSource(loadMoreCharacters) {
                     value = Unit
                 }
             }
