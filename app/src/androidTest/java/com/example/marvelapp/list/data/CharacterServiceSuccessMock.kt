@@ -65,7 +65,7 @@ class CharacterServiceLoadingMock : CharacterService {
         offset: Int?,
         name: String?,
     ): CharacterDataWrapper {
-        delay(1000)
+        delay(1_000)
         return CharacterDataWrapper(
             code = 200,
             status = "success",

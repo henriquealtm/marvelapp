@@ -2,8 +2,7 @@ package com.example.marvelapp.list
 
 import android.view.View
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.typeText
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
@@ -92,16 +91,30 @@ class CharacterListInstrumentedTest {
     @Test
     fun characterListVerifyFilter() {
         loadSuccessMock()
-        onView(withId(R.id.et_search)).perform(typeText("3D-Man"))
-        onView(withId(R.id.rv_character)).check(RecyclerViewItemCountAssertion(1))
+
+        onView(withId(R.id.et_search)).perform(typeText("3"))
+        onView(withId(R.id.progress_bar)).check(matches(isDisplayed()))
+        Thread.sleep(2_000)
+        onView(withId(R.id.rv_character)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.et_search)).perform(typeText("D-Man"))
+        onView(withId(R.id.progress_bar)).check(matches(isDisplayed()))
+        Thread.sleep(2_000)
+        onView(withId(R.id.rv_character)).check(matches(isDisplayed()))
+
         onView(withId(R.id.btn_clear)).perform(click())
-        onView(withId(R.id.rv_character)).check(RecyclerViewItemCountAssertion(3))
-        onView(withId(R.id.et_search)).perform(typeText("Bomb"))
-        onView(withId(R.id.rv_character)).check(RecyclerViewItemCountAssertion(1))
-        onView(withId(R.id.btn_clear)).perform(click())
-        onView(withId(R.id.rv_character)).check(RecyclerViewItemCountAssertion(3))
-        onView(withId(R.id.et_search)).perform(typeText("9"))
-        onView(withId(R.id.rv_character)).check(RecyclerViewItemCountAssertion(0))
+        onView(withId(R.id.progress_bar)).check(matches(isDisplayed()))
+        Thread.sleep(2_000)
+        onView(withId(R.id.rv_character)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun scrollToBottomShowListAndLoader() {
+        loadSuccessMock()
+        Thread.sleep(2_000)
+        onView(withId(R.id.rv_character)).perform(swipeUp())
+        onView(withId(R.id.rv_character)).check(matches(isDisplayed()))
+        onView(withId(R.id.progress_bar)).check(matches(isDisplayed()))
     }
 
     // Resource Loading (delay)
