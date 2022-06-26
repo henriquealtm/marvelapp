@@ -74,19 +74,16 @@ class CharacterListViewModel(
     val showCharacterList = list.map { it?.isNotEmpty() }
 
     init {
-        viewModelScope.launch {
-            // TODO - Create a method to add new sources
-            resourceCharacterContainer.callStarter.run {
-                addSource(onResume) {
-                    value = Unit
-                }
-                addSource(searchValue) {
-                    currentOffset = 0
-                    value = Unit
-                }
-                addSource(loadMoreCharacters) {
-                    value = Unit
-                }
+        resourceCharacterContainer.callStarter.run {
+            addSource(onResume) {
+                value = Unit
+            }
+            addSource(searchValue) {
+                currentOffset = 0
+                value = Unit
+            }
+            addSource(loadMoreCharacters) {
+                value = Unit
             }
         }
     }
